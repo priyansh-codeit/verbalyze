@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Verbalyze - Voice-first real-time mock interviews powered by browser Speech AI. Practice technical, behavioral, and system design interviews.">
+  <title>Verbalyze - Voice-First AI Interview Preparation Platform</title>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container navbar">
+      <div class="logo" style="cursor: pointer;">
+        <i class="fas fa-comment-nodes"></i>
+        <span>Verbalyze</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#" data-view="landing" class="active">Home</a></li>
+        <li><a href="#" data-view="dashboard">Dashboard</a></li>
+        <li><a href="#" data-view="selector">Practice</a></li>
+        <li><a href="#" data-view="platform-feedback">Feedback</a></li>
+        <li id="nav-auth-container">
+          <!-- Populated dynamically by app.js -->
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main class="container">
+    
+    <!-- View 1: Landing Page -->
+    <section id="landing-page" class="view-panel active">
+      <div class="hero">
+        <div class="hero-content">
+          <h1>Practice Interviews With <span class="text-gradient">Voice AI</span></h1>
+          <p>Verbalyze is a premium, voice-first interview preparation platform. Speak naturally, receive intelligent real-time audio analysis, and master your technical, behavioral, or system design paths.</p>
+          <div class="hero-buttons">
+            <button id="landing-cta" class="btn btn-primary"><i class="fas fa-play"></i> Start Practicing</button>
+            <button id="landing-start" class="btn btn-secondary"><i class="fas fa-chart-line"></i> View Dashboard</button>
+          </div>
+        </div>
+        <div class="hero-visualizer">
+          <div class="visualizer-orb"></div>
+          <div class="visualizer-ring"></div>
+          <div class="visualizer-core">
+            <i class="fas fa-microphone-lines"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features Section -->
+      <div class="features-section">
+        <div class="section-title">
+          <h2>How it Works</h2>
+          <p>Explore the features built into Verbalyze</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card glass-panel">
+            <div class="feature-icon">
+              <i class="fas fa-microphone"></i>
+            </div>
+            <h3>Voice-First Delivery</h3>
+            <p>Speak naturally instead of typing. The browser transcribes your answers in real-time and evaluates your vocal pacing.</p>
+          </div>
+          <div class="feature-card glass-panel">
+            <div class="feature-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>Intelligent Grading</h3>
+            <p>Our scoring model maps your answers to critical concepts, sentence structures, and counts speech fillers like "um" and "like".</p>
+          </div>
+          <div class="feature-card glass-panel">
+            <div class="feature-icon">
+              <i class="fas fa-chart-pie"></i>
+            </div>
+            <h3>Detailed Report Cards</h3>
+            <p>Understand your scores with overall grades (A, B, C, F), key concepts covered, and tailored improvement suggestions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 2: Dashboard -->
+    <section id="dashboard-page" class="view-panel">
+      <div class="panel-header">
+        <h2>Your Preparation Dashboard</h2>
+      </div>
+
+      <!-- Statistics Grids -->
+      <div class="dashboard-grid">
+        <div class="stat-card glass-panel">
+          <div class="stat-icon"><i class="fas fa-folder-open"></i></div>
+          <div class="stat-info">
+            <h4>Total Sessions</h4>
+            <div id="stat-total" class="stat-value">0</div>
+          </div>
+        </div>
+        <div class="stat-card glass-panel">
+          <div class="stat-icon"><i class="fas fa-star"></i></div>
+          <div class="stat-info">
+            <h4>Average Score</h4>
+            <div id="stat-avg-score" class="stat-value">--</div>
+          </div>
+        </div>
+        <div class="stat-card glass-panel">
+          <div class="stat-icon"><i class="fas fa-tags"></i></div>
+          <div class="stat-info">
+            <h4>Keyword Match</h4>
+            <div id="stat-avg-keyword" class="stat-value">--</div>
+          </div>
+        </div>
+        <div class="stat-card glass-panel">
+          <div class="stat-icon"><i class="fas fa-keyboard"></i></div>
+          <div class="stat-info">
+            <h4>Completeness</h4>
+            <div id="stat-avg-completeness" class="stat-value">--</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main vs Sidebar -->
+      <div class="dashboard-sections">
+        <div class="dashboard-main">
+          <div class="recent-interviews glass-panel">
+            <div class="panel-header" style="margin-bottom: 24px;">
+              <h3>Recent Mock Sessions</h3>
+            </div>
+            <div id="recent-interviews-list" class="interview-list">
+              <!-- Rendered Dynamically -->
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-side">
+          <div class="performance-radar glass-panel">
+            <div class="panel-header" style="margin-bottom: 24px;">
+              <h3>Category Mastery</h3>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-info">
+                <span>Behavioral</span>
+                <span id="text-behavioral">0%</span>
+              </div>
+              <div class="progress-bar">
+                <div id="fill-behavioral" class="progress-fill fill-behavioral" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-info">
+                <span>Technical</span>
+                <span id="text-technical">0%</span>
+              </div>
+              <div class="progress-bar">
+                <div id="fill-technical" class="progress-fill fill-technical" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-info">
+                <span>System Design</span>
+                <span id="text-system">0%</span>
+              </div>
+              <div class="progress-bar">
+                <div id="fill-system" class="progress-fill fill-system" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 3: Interview Mode Selector -->
+    <section id="selector-page" class="view-panel">
+      <div class="selector-layout">
+        <div class="selector-title">
+          <h2>Configure Your Interview</h2>
+          <p>Choose your interview focus area, target seniority, and role type.</p>
+        </div>
+
+        <!-- Mode grid -->
+        <div class="modes-grid">
+          <div class="mode-card glass-panel selected" data-mode="technical">
+            <div class="mode-card-select-dot"></div>
+            <div class="feature-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3>Technical</h3>
+            <p>Deep dive into core CS fundamentals, algorithms, browser engines, and syntax logic.</p>
+          </div>
+          <div class="mode-card glass-panel" data-mode="behavioral">
+            <div class="mode-card-select-dot"></div>
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Behavioral</h3>
+            <p>Practice interpersonal communication scenarios using the structured STAR framework.</p>
+          </div>
+          <div class="mode-card glass-panel" data-mode="system-design">
+            <div class="mode-card-select-dot"></div>
+            <div class="feature-icon">
+              <i class="fas fa-sitemap"></i>
+            </div>
+            <h3>System Design</h3>
+            <p>Architect global-scale applications, discuss databases, caching layers, and system replication.</p>
+          </div>
+        </div>
+
+        <!-- parameters -->
+        <div class="config-layout">
+          <div class="config-box glass-panel">
+            <h3>Target Seniority</h3>
+            <div class="difficulty-selector">
+              <button class="difficulty-btn" data-diff="junior">Junior</button>
+              <button class="difficulty-btn selected" data-diff="mid">Mid-Level</button>
+              <button class="difficulty-btn" data-diff="senior">Senior</button>
+            </div>
+          </div>
+          
+          <div class="config-box glass-panel">
+            <h3>Target Role Focus</h3>
+            <div class="select-dropdown">
+              <select id="role-select">
+                <option value="Frontend Developer">Frontend Developer</option>
+                <option value="Backend Developer">Backend Developer</option>
+                <option value="Fullstack Engineer">Fullstack Engineer</option>
+                <option value="Mobile Developer">Mobile Developer</option>
+                <option value="DevOps Engineer">DevOps Engineer</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="selector-start-container">
+          <button id="selector-start" class="btn btn-primary" style="padding: 16px 40px; font-size: 1.1rem;">
+            <i class="fas fa-microphone"></i> Begin Voice Session
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 4: Active Interview Room -->
+    <section id="interview-page" class="view-panel">
+      <div class="interview-layout">
+        
+        <!-- Interactive voice console -->
+        <div class="interview-console glass-panel">
+          <div class="interview-status-bar">
+            <div id="status-dot" class="pulse-dot pulse speaking"></div>
+            <div id="status-text" class="status-text status-speaking">Speaking</div>
+          </div>
+
+          <!-- Canvas Visualizer -->
+          <div class="visualizer-canvas-container">
+            <canvas id="audio-canvas"></canvas>
+          </div>
+
+          <!-- Question Box -->
+          <div class="question-card">
+            <div id="question-num" class="question-num">Question 1 of 3</div>
+            <div id="question-text" class="question-text">Initializing connection to voice engine...</div>
+          </div>
+
+          <!-- Actions -->
+          <div class="interview-actions">
+            <button id="btn-mute" class="btn btn-secondary">
+              <i class="fas fa-microphone"></i> Mute
+            </button>
+            <button id="btn-interrupt" class="btn btn-secondary" style="display: none;">
+              <i class="fas fa-hand-paper"></i> Interrupt
+            </button>
+            <button id="btn-skip" class="btn btn-secondary">
+              <i class="fas fa-forward"></i> Skip
+            </button>
+            <button id="btn-end" class="btn btn-danger">
+              <i class="fas fa-stop"></i> End Session
+            </button>
+          </div>
+
+          <!-- Text Fallback Box -->
+          <div style="width: 100%; margin-top: 24px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
+            <div style="display: flex; gap: 10px;">
+              <textarea id="text-answer-input" rows="2" placeholder="Type your answer here if microphone is muted or unavailable..." style="flex: 1; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); color: #fff; font-family: inherit; resize: none;"></textarea>
+              <button id="btn-submit-text" class="btn btn-primary" style="padding: 0 20px;" disabled>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scrolling dialogue transcript -->
+        <div class="transcript-panel glass-panel">
+          <div class="transcript-header">
+            <h3>Live Conversation Log</h3>
+            <span class="interview-subtitle"><i class="fas fa-comment-dots"></i> Synced</span>
+          </div>
+          <div id="transcript-scroll" class="transcript-scroll">
+            <!-- Dialog bubbles rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 5: Feedback / Report Page -->
+    <section id="feedback-page" class="view-panel">
+      <div class="glass-panel report-header">
+        <div class="grade-circle-container">
+          <svg class="grade-circle-svg" width="160" height="160">
+            <circle class="grade-circle-bg" cx="80" cy="80" r="70"></circle>
+            <circle id="grade-circle-fill" class="grade-circle-fill" cx="80" cy="80" r="70" stroke-dasharray="440" stroke-dashoffset="0"></circle>
+          </svg>
+          <div id="grade-label" class="grade-text">A</div>
+        </div>
+        <div class="report-summary">
+          <h2 id="report-title">Technical Mock Interview Report</h2>
+          <p id="report-subtitle" class="interview-subtitle">Level: Mid-Level • Mode: Technical • Tested on July 5, 2026</p>
+          <p id="report-summary-text" style="margin-top: 16px; font-size: 1.05rem; max-width: 700px;">
+            Analyzing session data...
+          </p>
+        </div>
+      </div>
+
+      <!-- Breakdown scores -->
+      <div class="report-breakdown">
+        <div class="breakdown-card glass-panel">
+          <div id="breakdown-keywords" class="breakdown-score">--</div>
+          <div class="breakdown-label">Keywords Score</div>
+        </div>
+        <div class="breakdown-card glass-panel">
+          <div id="breakdown-completeness" class="breakdown-score">--</div>
+          <div class="breakdown-label">Completeness</div>
+        </div>
+        <div class="breakdown-card glass-panel">
+          <div id="breakdown-clarity" class="breakdown-score">--</div>
+          <div class="breakdown-label">Speech Clarity</div>
+        </div>
+        <div class="breakdown-card glass-panel">
+          <div id="breakdown-structure" class="breakdown-score">--</div>
+          <div class="breakdown-label">Structure</div>
+        </div>
+      </div>
+
+      <!-- QA Review Accordion -->
+      <div class="qa-review glass-panel">
+        <h3>Question by Question Evaluation</h3>
+        <div id="qa-list-container" class="qa-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="report-actions">
+        <button id="btn-report-dashboard" class="btn btn-secondary">
+          <i class="fas fa-chart-line"></i> Dashboard
+        </button>
+        <button id="btn-report-retry" class="btn btn-primary">
+          <i class="fas fa-rotate-right"></i> Try Another Focus
+        </button>
+      </div>
+    </section>
+
+    <!-- View 6: Auth Page (Sign In / Sign Up) -->
+    <section id="auth-page" class="view-panel">
+      <div class="auth-container glass-panel" style="max-width: 480px; margin: 40px auto; padding: 40px;">
+        <div class="auth-header" style="text-align: center; margin-bottom: 30px;">
+          <i class="fas fa-user-shield" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 15px;"></i>
+          <h2 id="auth-title">Welcome to Verbalyze</h2>
+          <p id="auth-subtitle" style="color: var(--text-muted); font-size: 0.95rem; margin-top: 8px;">Sign in to access your interview dashboard</p>
+        </div>
+
+        <form id="auth-form" onsubmit="event.preventDefault();">
+          <div style="margin-bottom: 20px;">
+            <label for="auth-email" style="display: block; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.05em;">Email Address</label>
+            <input type="email" id="auth-email" required placeholder="name@domain.com" style="width: 100%; padding: 14px; border-radius: 8px; background: rgba(0,0,0,0.25); border: 1px solid var(--glass-border); color: #fff; font-family: inherit; font-size: 1rem; transition: var(--transition-smooth);" />
+          </div>
+          
+          <div style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <label for="auth-password" style="display: block; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em;">Password</label>
+              <a href="#" style="font-size: 0.85rem; color: var(--accent-secondary);">Forgot?</a>
+            </div>
+            <input type="password" id="auth-password" required placeholder="••••••••" style="width: 100%; padding: 14px; border-radius: 8px; background: rgba(0,0,0,0.25); border: 1px solid var(--glass-border); color: #fff; font-family: inherit; font-size: 1rem; transition: var(--transition-smooth);" />
+          </div>
+
+          <button type="submit" id="btn-auth-submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 20px;">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </button>
+        </form>
+
+        <div style="display: flex; align-items: center; text-align: center; margin-bottom: 20px;">
+          <div style="flex: 1; height: 1px; background: var(--glass-border);"></div>
+          <span style="padding: 0 15px; color: var(--text-muted); font-size: 0.85rem;">or continue with</span>
+          <div style="flex: 1; height: 1px; background: var(--glass-border);"></div>
+        </div>
+
+        <div style="display: flex; gap: 15px;">
+          <button id="btn-oauth-github" class="btn btn-secondary" style="flex: 1; justify-content: center; font-size: 0.9rem;">
+            <i class="fab fa-github"></i> GitHub
+          </button>
+          <button id="btn-oauth-google" class="btn btn-secondary" style="flex: 1; justify-content: center; font-size: 0.9rem;">
+            <i class="fab fa-google"></i> Google
+          </button>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; font-size: 0.9rem; color: var(--text-muted);">
+          <span id="auth-toggle-msg">New to Verbalyze?</span> 
+          <a href="#" id="auth-toggle-link" style="color: var(--accent-primary); font-weight: 600;">Create an account</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 7: Platform Feedback Page -->
+    <section id="platform-feedback-page" class="view-panel">
+      <div class="feedback-layout" style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: stretch;">
+        <!-- Form Column -->
+        <div class="feedback-form-box glass-panel" style="padding: 40px;">
+          <h2 style="margin-bottom: 8px;">Share Your Feedback</h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px;">Help us improve Verbalyze by sharing your experience, reporting a bug, or suggesting new features.</p>
+          
+          <form id="platform-feedback-form" onsubmit="event.preventDefault();">
+            <!-- Category dropdown -->
+            <div style="margin-bottom: 20px;">
+              <label for="pf-category" style="display: block; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.05em;">Feedback Category</label>
+              <div class="select-dropdown">
+                <select id="pf-category" required>
+                  <option value="Voice Quality">Voice Quality & Latency</option>
+                  <option value="Grading Accuracy">Grading & Scoring Model</option>
+                  <option value="UI UX Design">UI & UX Aesthetics</option>
+                  <option value="Questions Diversity">Question Variety</option>
+                  <option value="General Suggestion">General Suggestion</option>
+                  <option value="Bug Report">Bug Report</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Star rating -->
+            <div style="margin-bottom: 24px;">
+              <label style="display: block; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.05em;">Your Rating</label>
+              <div class="star-rating-container" id="star-rating-bar" style="display: flex; gap: 10px; font-size: 1.8rem; color: rgba(255,255,255,0.15); cursor: pointer;">
+                <i class="fas fa-star pf-star glow" data-rating="1" style="color: var(--accent-warning);"></i>
+                <i class="fas fa-star pf-star glow" data-rating="2" style="color: var(--accent-warning);"></i>
+                <i class="fas fa-star pf-star glow" data-rating="3" style="color: var(--accent-warning);"></i>
+                <i class="fas fa-star pf-star glow" data-rating="4" style="color: var(--accent-warning);"></i>
+                <i class="fas fa-star pf-star glow" data-rating="5" style="color: var(--accent-warning);"></i>
+              </div>
+              <input type="hidden" id="pf-rating-val" value="5" />
+            </div>
+
+            <!-- Comments text area -->
+            <div style="margin-bottom: 30px;">
+              <label for="pf-comments" style="display: block; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.05em;">Comments / Details</label>
+              <textarea id="pf-comments" required rows="5" placeholder="Tell us what you liked, what can be improved, or detail a bug you found..." style="width: 100%; padding: 14px; border-radius: 8px; background: rgba(0,0,0,0.25); border: 1px solid var(--glass-border); color: #fff; font-family: inherit; font-size: 1rem; resize: none; transition: var(--transition-smooth);"></textarea>
+            </div>
+
+            <button type="submit" id="btn-pf-submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+              <i class="fas fa-paper-plane"></i> Submit Feedback
+            </button>
+          </form>
+        </div>
+
+        <!-- History Column -->
+        <div class="feedback-logs-box glass-panel" style="padding: 40px; display: flex; flex-direction: column;">
+          <h3 style="margin-bottom: 20px;">Your Submissions</h3>
+          <div id="pf-logs-list" style="flex: 1; max-height: 480px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; padding-right: 8px;">
+            <!-- Submitted feedbacks listed here dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="margin-top: 60px; padding: 40px 0 20px 0; border-top: 1px solid var(--glass-border); text-align: center; font-size: 0.9rem; color: var(--text-muted);">
+    <p>Developed with ❤️ by <span style="color: var(--accent-secondary); font-weight: 600;">Priyansh Yadav</span></p>
+    <p style="margin-top: 8px;">Got questions or suggestions? Contact at <a href="mailto:y.priyansh2438@gmail.com" style="color: var(--accent-primary); font-weight: 500;">y.priyansh2438@gmail.com</a></p>
+  </footer>
+
+  <!-- Toast alert element -->
+  <div id="toast-alert" style="display: none; position: fixed; bottom: 30px; right: 30px; background: var(--bg-surface); border: 1px solid var(--accent-success); border-left: 4px solid var(--accent-success); border-radius: 8px; padding: 16px 24px; box-shadow: var(--glass-shadow); color: var(--text-primary); z-index: 999; animation: fadeIn 0.3s ease-out;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <i class="fas fa-circle-check" style="color: var(--accent-success); font-size: 1.3rem;"></i>
+      <span id="toast-message">Feedback submitted successfully!</span>
+    </div>
+  </div>
+
+  <!-- Core Javascript Modules -->
+  <script src="questions.js"></script>
+  <script src="interview.js"></script>
+  <script src="feedback.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

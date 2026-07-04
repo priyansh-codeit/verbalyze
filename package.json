@@ -1,0 +1,13 @@
+{
+  "name": "mockmate-ai",
+  "version": "1.0.0",
+  "description": "Voice-First Mock Interview Prep Platform with local Web Speech APIs and audio visualizer rendering.",
+  "main": "index.html",
+  "scripts": {
+    "dev": "browser-sync start --server --files \"*.html, *.css, *.js\""
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^3.0.3"
+  }
+}
