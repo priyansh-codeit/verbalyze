@@ -32,4 +32,4 @@ An interactive, high-fidelity mock interview platform built with a pure client-s
 1. **Install dependencies**:
    ```bash
    npm install
-for further details you can see Exaplanation.txt file
+for further details you can see Explanation.txt file
