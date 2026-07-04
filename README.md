@@ -2,7 +2,7 @@
 
 **The future of interview preparation is voice-first. Practice with an AI interviewer that listens, adapts, and challenges you in real-time.**
 
-[🎯 Live Demo](https://verbalyze.vercel.app)
+[Live Demo](https://verbalyze.vercel.app)
 
 An interactive, high-fidelity mock interview platform built with a pure client-side stack. This application leverages the browser's built-in **Web Speech API** and **Web Audio API** to deliver a fully functional voice-first interview simulation without requiring external API keys or server configuration.
 
