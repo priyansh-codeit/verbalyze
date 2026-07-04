@@ -1,5 +1,9 @@
 # Verbalyze - Voice-First AI Interview Prep Platform
 
+**The future of interview preparation is voice-first. Practice with an AI interviewer that listens, adapts, and challenges you in real-time.**
+
+[🎯 Live Demo](https://verbalyze.vercel.app)
+
 An interactive, high-fidelity mock interview platform built with a pure client-side stack. This application leverages the browser's built-in **Web Speech API** and **Web Audio API** to deliver a fully functional voice-first interview simulation without requiring external API keys or server configuration.
 
 ## 🚀 Features
@@ -28,17 +32,3 @@ An interactive, high-fidelity mock interview platform built with a pure client-s
 1. **Install dependencies**:
    ```bash
    npm install
-   ```
-
-2. **Run local server**:
-   ```bash
-   npm run dev
-   ```
-
-3. **Navigate to app**:
-   Open [http://localhost:3000](http://localhost:3000) in your browser. Give microphone permissions when starting the mock interview.
-
-## 👤 Author
-
-Developed by **Priyansh Yadav**
-- **Email**: [y.priyansh2438@gmail.com](mailto:y.priyansh2438@gmail.com)
