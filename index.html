@@ -18,7 +18,7 @@
   <header>
     <div class="container navbar">
       <div class="logo" style="cursor: pointer;">
-        <i class="fas fa-comment-nodes"></i>
+        <i class="fas fa-microphone-lines"></i>
         <span>Verbalyze</span>
       </div>
       <ul class="nav-links">
@@ -47,12 +47,81 @@
             <button id="landing-start" class="btn btn-secondary"><i class="fas fa-chart-line"></i> View Dashboard</button>
           </div>
         </div>
-        <div class="hero-visualizer">
-          <div class="visualizer-orb"></div>
-          <div class="visualizer-ring"></div>
-          <div class="visualizer-core">
-            <i class="fas fa-microphone-lines"></i>
+        <div class="hero-visualizer" style="position: relative; height: 380px; display: flex; align-items: center; justify-content: center;">
+          
+          <!-- Main Interviewer console card -->
+          <div class="hero-main-card glass-panel" style="width: 100%; max-width: 440px; padding: 24px; position: relative; z-index: 2; border-color: rgba(6, 182, 212, 0.2); box-shadow: var(--glass-shadow);">
+            <!-- Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent-primary); display: flex; justify-content: center; align-items: center; color: white; font-size: 1.1rem; box-shadow: 0 0 10px rgba(6,182,212,0.3);">
+                  <i class="fas fa-brain"></i>
+                </div>
+                <div>
+                  <h4 style="margin: 0; font-size: 0.95rem; font-family: var(--font-heading); color: var(--text-primary); text-align: left;">AI Interviewer</h4>
+                  <p style="margin: 2px 0 0 0; font-size: 0.75rem; color: var(--text-muted); text-align: left;">Live Session</p>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600; color: var(--accent-success);">
+                <span class="active-dot" style="display: inline-block; width: 8px; height: 8px; background: var(--accent-success); border-radius: 50%; box-shadow: 0 0 8px var(--accent-success); animation: pulse-dot 1.5s infinite;"></span> Active
+              </div>
+            </div>
+
+            <!-- Speech box -->
+            <div style="background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; font-size: 0.88rem; color: var(--text-secondary); font-style: italic; border-left: 3px solid var(--accent-primary); text-align: left;">
+              "Tell me about your experience with React..."
+            </div>
+
+            <!-- Progress bar segments -->
+            <div style="display: flex; gap: 6px; margin-bottom: 24px;">
+              <span style="flex: 1; height: 4px; background: var(--accent-primary); border-radius: 2px; box-shadow: 0 0 8px var(--accent-primary);"></span>
+              <span style="flex: 1; height: 4px; background: #9b59b6; border-radius: 2px; box-shadow: 0 0 8px #9b59b6;"></span>
+              <span style="flex: 1; height: 4px; background: var(--accent-secondary); border-radius: 2px; box-shadow: 0 0 8px var(--accent-secondary);"></span>
+              <span style="flex: 1; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;"></span>
+            </div>
+
+            <!-- Metrics -->
+            <div style="display: flex; gap: 16px;">
+              <div class="glass-panel" style="flex: 1; padding: 14px; background: rgba(255,255,255,0.02); text-align: left; border-color: rgba(255,255,255,0.03);">
+                <div style="font-size: 1.5rem; font-weight: 800; font-family: var(--font-heading); color: var(--text-primary); margin-bottom: 2px;">92</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Confidence</div>
+              </div>
+              <div class="glass-panel" style="flex: 1; padding: 14px; background: rgba(255,255,255,0.02); text-align: left; border-color: rgba(255,255,255,0.03);">
+                <div style="font-size: 1.5rem; font-weight: 800; font-family: var(--font-heading); color: var(--accent-secondary); margin-bottom: 2px;">8.5</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Score</div>
+              </div>
+            </div>
           </div>
+
+          <!-- Floating Badge 1 (Top-Left) -->
+          <div class="floating-badge top-left-badge glass-panel" style="position: absolute; top: 15px; left: -25px; z-index: 3; display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; border-color: rgba(34, 197, 94, 0.2); box-shadow: var(--glass-shadow); background: rgba(16, 22, 42, 0.85);">
+            <span style="width: 20px; height: 20px; border-radius: 50%; background: rgba(34, 197, 94, 0.15); display: flex; justify-content: center; align-items: center; color: var(--accent-success); font-size: 0.85rem;">
+              <i class="fas fa-check"></i>
+            </span>
+            <div style="text-align: left;">
+              <div style="color: var(--text-primary); font-size: 0.82rem; font-weight: 700;">Interview Complete!</div>
+              <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 1px; font-weight: 500;">Score: <span style="color: var(--accent-success); font-weight: 700;">94/100</span></div>
+            </div>
+          </div>
+
+          <!-- Floating Badge 2 (Right-Middle) -->
+          <div class="floating-badge right-middle-badge glass-panel" style="position: absolute; right: -25px; top: 140px; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 14px; border-radius: 12px; border-color: rgba(155, 89, 182, 0.25); box-shadow: var(--glass-shadow); background: rgba(16, 22, 42, 0.85);">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(155, 89, 182, 0.15); display: flex; justify-content: center; align-items: center; color: #a29bfe; font-size: 0.9rem;">
+              <i class="fas fa-bullseye"></i>
+            </div>
+            <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-primary); margin-top: 4px;">50+</div>
+            <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Roles</div>
+          </div>
+
+          <!-- Floating Badge 3 (Bottom-Right) -->
+          <div class="floating-badge bottom-right-badge glass-panel" style="position: absolute; bottom: 30px; right: -20px; z-index: 3; display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; border-color: rgba(6, 182, 212, 0.25); box-shadow: var(--glass-shadow); background: rgba(16, 22, 42, 0.85);">
+            <i class="fas fa-arrow-trend-up" style="color: var(--accent-primary); font-size: 1rem;"></i>
+            <div style="text-align: left;">
+              <div style="color: var(--text-primary); font-size: 0.85rem; font-weight: 700;">+15%</div>
+              <div style="color: var(--text-muted); font-size: 0.72rem; font-weight: 500;">This week</div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -119,22 +188,197 @@
               <i class="fas fa-microphone"></i>
             </div>
             <h3>Voice-First Delivery</h3>
-            <p>Speak naturally instead of typing. The browser transcribes your answers in real-time and evaluates your vocal pacing.</p>
+            <p>Speak naturally instead of typing. Real-time local speech-to-text transcriptions with voice cadence metrics, pacing rate checks, and volume level feedback.</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;">
+              <span class="tag tag-technical" style="font-size: 0.72rem; padding: 2px 6px;">Web Audio API</span>
+              <span class="tag tag-behavioral" style="font-size: 0.72rem; padding: 2px 6px;">STT Engine</span>
+            </div>
           </div>
           <div class="feature-card glass-panel">
             <div class="feature-icon">
               <i class="fas fa-brain"></i>
             </div>
             <h3>Intelligent Grading</h3>
-            <p>Our scoring model maps your answers to critical concepts, sentence structures, and counts speech fillers like "um" and "like".</p>
+            <p>Analyzes your answers using boundary regex pattern matching, structural keyword completeness analysis, and real-time verbal filler-word deductions.</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;">
+              <span class="tag tag-system" style="font-size: 0.72rem; padding: 2px 6px;">Keyword Analytics</span>
+              <span class="tag tag-technical" style="font-size: 0.72rem; padding: 2px 6px;">STAR Framework</span>
+            </div>
           </div>
           <div class="feature-card glass-panel">
             <div class="feature-icon">
               <i class="fas fa-chart-pie"></i>
             </div>
             <h3>Detailed Report Cards</h3>
-            <p>Understand your scores with overall grades (A, B, C, F), key concepts covered, and tailored improvement suggestions.</p>
+            <p>Generate analytical report cards detailing overall grades, breakdown metrics, highlighted missing keywords, and contextual suggestions for improvement.</p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;">
+              <span class="tag tag-behavioral" style="font-size: 0.72rem; padding: 2px 6px;">Performance Logs</span>
+              <span class="tag tag-system" style="font-size: 0.72rem; padding: 2px 6px;">Local History</span>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <!-- How it Works Section -->
+      <div class="how-it-works-section" style="margin: 60px 0 80px 0;">
+        <div class="section-title" style="text-align: center; margin-bottom: 50px;">
+          <h2>How it Works</h2>
+          <p>Prepare for your target role in three simple steps</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+          
+          <!-- Step 1 -->
+          <div class="step-card glass-panel" style="padding: 40px; text-align: center; position: relative; transition: var(--transition-smooth); overflow: hidden;">
+            <div class="step-number" style="position: absolute; top: -10px; right: 10px; font-size: 6rem; font-weight: 900; color: rgba(6, 182, 212, 0.05); font-family: var(--font-heading); pointer-events: none; transition: var(--transition-smooth);">01</div>
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.2); display: flex; justify-content: center; align-items: center; margin: 0 auto 24px auto;">
+              <i class="fas fa-sliders" style="font-size: 1.5rem; color: var(--accent-primary);"></i>
+            </div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 12px; font-family: var(--font-heading);">1. Configure Track</h3>
+            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">Select your domain (Technical, Behavioral, or System Design), set difficulty level, and select your target job role.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-card glass-panel" style="padding: 40px; text-align: center; position: relative; transition: var(--transition-smooth); overflow: hidden;">
+            <div class="step-number" style="position: absolute; top: -10px; right: 10px; font-size: 6rem; font-weight: 900; color: rgba(6, 182, 212, 0.05); font-family: var(--font-heading); pointer-events: none; transition: var(--transition-smooth);">02</div>
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(38, 100%, 55%, 0.1); border: 1px solid rgba(38, 100%, 55%, 0.2); display: flex; justify-content: center; align-items: center; margin: 0 auto 24px auto;">
+              <i class="fas fa-microphone" style="font-size: 1.5rem; color: var(--accent-secondary);"></i>
+            </div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 12px; font-family: var(--font-heading);">2. Voice Interview</h3>
+            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">Answer verbal questions asked by the AI synthesis engine. Your pacing, voice transcription, and content are evaluated locally.</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-card glass-panel" style="padding: 40px; text-align: center; position: relative; transition: var(--transition-smooth); overflow: hidden;">
+            <div class="step-number" style="position: absolute; top: -10px; right: 10px; font-size: 6rem; font-weight: 900; color: rgba(6, 182, 212, 0.05); font-family: var(--font-heading); pointer-events: none; transition: var(--transition-smooth);">03</div>
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.2); display: flex; justify-content: center; align-items: center; margin: 0 auto 24px auto;">
+              <i class="fas fa-chart-line" style="font-size: 1.5rem; color: var(--accent-primary);"></i>
+            </div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 12px; font-family: var(--font-heading);">3. Get Report Card</h3>
+            <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">Review your scoring breakdowns (Keywords, Structure, Pacing) and filler-word deductions to refine your mock preparation.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tech Stack Section -->
+      <div class="tech-stack-section" style="margin-bottom: 80px;">
+        <div class="section-title">
+          <h2>Technological Core</h2>
+          <p>Powered entirely by native browser APIs — zero server latency, maximum privacy</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 30px;">
+          <div class="tech-badge glass-panel" style="padding: 12px 24px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-family: var(--font-heading); transition: var(--transition-smooth); cursor: default;">
+            <i class="fas fa-volume-high" style="color: var(--accent-primary);"></i> Web Speech TTS
+          </div>
+          <div class="tech-badge glass-panel" style="padding: 12px 24px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-family: var(--font-heading); transition: var(--transition-smooth); cursor: default;">
+            <i class="fas fa-microphone-lines" style="color: var(--accent-secondary);"></i> webkitSpeech STT
+          </div>
+          <div class="tech-badge glass-panel" style="padding: 12px 24px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-family: var(--font-heading); transition: var(--transition-smooth); cursor: default;">
+            <i class="fas fa-chart-simple" style="color: var(--accent-primary);"></i> AnalyserNode FFT
+          </div>
+          <div class="tech-badge glass-panel" style="padding: 12px 24px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-family: var(--font-heading); transition: var(--transition-smooth); cursor: default;">
+            <i class="fas fa-brush" style="color: var(--accent-secondary);"></i> HTML5 Canvas 2D
+          </div>
+          <div class="tech-badge glass-panel" style="padding: 12px 24px; display: flex; align-items: center; gap: 10px; font-weight: 600; font-family: var(--font-heading); transition: var(--transition-smooth); cursor: default;">
+            <i class="fas fa-database" style="color: var(--accent-primary);"></i> LocalStorage DB
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonials Section -->
+      <div id="landing-testimonials-section" class="testimonials-section" style="margin-bottom: 80px; display: none;">
+        <div class="section-title">
+          <h2>User Feedback & Reviews</h2>
+          <p>Read actual platform feedback shared by practicing developers</p>
+        </div>
+        <div id="landing-testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 30px;">
+          <!-- Dynamically populated from actual user feedback -->
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="faq-section" style="margin-bottom: 80px;">
+        <div class="section-title">
+          <h2>Frequently Asked Questions</h2>
+          <p>Everything you need to know about the Verbalyze voice platform</p>
+        </div>
+        <div class="faq-accordion" style="max-width: 760px; margin: 40px auto 0 auto; display: flex; flex-direction: column; gap: 16px;">
+          
+          <div class="faq-item glass-panel" style="padding: 20px 24px; cursor: pointer; transition: var(--transition-smooth);">
+            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-family: var(--font-heading); font-size: 1.05rem;">
+              <span>Does Verbalyze require external API keys or cloud services?</span>
+              <i class="fas fa-plus faq-icon" style="transition: transform 0.3s ease; color: var(--accent-secondary);"></i>
+            </div>
+            <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+              <p style="padding-top: 12px;">No. Verbalyze operates entirely on the client-side. It utilizes the browser's built-in Web Speech API (SpeechSynthesis for text-to-speech, webkitSpeechRecognition for transcribing) and Web Audio API for visualizer rendering. It requires zero cloud key registration, proxy servers, or third-party paid AI billing subscriptions (such as Hume, VAPI, or OpenAI API keys) to deliver a high-fidelity voice-first simulation.</p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-panel" style="padding: 20px 24px; cursor: pointer; transition: var(--transition-smooth);">
+            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-family: var(--font-heading); font-size: 1.05rem;">
+              <span>How does the AI evaluate my answers and compute the score?</span>
+              <i class="fas fa-plus faq-icon" style="transition: transform 0.3s ease; color: var(--accent-secondary);"></i>
+            </div>
+            <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+              <p style="padding-top: 12px;">The platform processes your transcript using a 4-tiered scoring engine:
+                <br>• <strong>Keywords Matched (40%)</strong>: Searches for critical engineering terminology or core STAR indicators using boundary regex matching.
+                <br>• <strong>Completeness (30%)</strong>: Rates answer length against seniority standards (Junior: 40 words, Mid: 70 words, Senior: 100 words).
+                <br>• <strong>Clarity (10%)</strong>: Counts verbal filler phrases (um, uh, like, basically, actually, you know) and applies a minor penalty per instance.
+                <br>• <strong>Structure (20%)</strong>: Validates analytical connectors (because, since, therefore, specifically, trade-off) to check logical sequencing.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-panel" style="padding: 20px 24px; cursor: pointer; transition: var(--transition-smooth);">
+            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-family: var(--font-heading); font-size: 1.05rem;">
+              <span>Is my voice recording data private?</span>
+              <i class="fas fa-plus faq-icon" style="transition: transform 0.3s ease; color: var(--accent-secondary);"></i>
+            </div>
+            <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+              <p style="padding-top: 12px;">Yes. Because the platform runs purely inside your browser sandbox, your vocal responses are processed locally in-memory. No raw audio files or text transcriptions are uploaded to external clouds, making the platform 100% private and secure.</p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-panel" style="padding: 20px 24px; cursor: pointer; transition: var(--transition-smooth);">
+            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-family: var(--font-heading); font-size: 1.05rem;">
+              <span>Which web browsers are supported, and how do I fix permission blocks?</span>
+              <i class="fas fa-plus faq-icon" style="transition: transform 0.3s ease; color: var(--accent-secondary);"></i>
+            </div>
+            <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+              <p style="padding-top: 12px;">Google Chrome, Microsoft Edge, and Safari are fully supported since they provide native support for both Speech Synthesis and Speech Recognition. If your browser blocks the microphone, click the lock icon in the address bar next to the website URL, toggle the Microphone permission to "Allow", and reload the page.</p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-panel" style="padding: 20px 24px; cursor: pointer; transition: var(--transition-smooth);">
+            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-family: var(--font-heading); font-size: 1.05rem;">
+              <span>How does the Canvas Waveform Visualizer work?</span>
+              <i class="fas fa-plus faq-icon" style="transition: transform 0.3s ease; color: var(--accent-secondary);"></i>
+            </div>
+            <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+              <p style="padding-top: 12px;">It utilizes the browser's Web Audio API. When you grant microphone access, the system routes the input through a MediaStreamAudioSourceNode into an AnalyserNode. The AnalyserNode performs a real-time Fast Fourier Transform (FFT) to extract audio frequency data, which is then dynamically drawn onto an HTML5 Canvas as cyan neon bars during active user speech.</p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-panel" style="padding: 20px 24px; cursor: pointer; transition: var(--transition-smooth);">
+            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-family: var(--font-heading); font-size: 1.05rem;">
+              <span>Can I type my answers instead of speaking?</span>
+              <i class="fas fa-plus faq-icon" style="transition: transform 0.3s ease; color: var(--accent-secondary);"></i>
+            </div>
+            <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+              <p style="padding-top: 12px;">Yes. Verbalyze includes a hybrid keyboard fallback panel. If you are in a noisy room, don't have a working microphone, or simply prefer writing, you can type your answers directly into the console text area and submit. The grading engine evaluates typed input under the exact same technical criteria, ensuring a seamless hybrid workflow.</p>
+            </div>
+          </div>
+
+          <div class="faq-item glass-panel" style="padding: 20px 24px; cursor: pointer; transition: var(--transition-smooth);">
+            <div class="faq-question" style="display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-family: var(--font-heading); font-size: 1.05rem;">
+              <span>Is there any persistence for my mock interview history?</span>
+              <i class="fas fa-plus faq-icon" style="transition: transform 0.3s ease; color: var(--accent-secondary);"></i>
+            </div>
+            <div class="faq-answer" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6;">
+              <p style="padding-top: 12px;">Yes. All completed session logs (scores, questions, transcripts, grading indicators, and comments) are saved locally inside your browser's persistent LocalStorage. This data feeds directly into your Preparation Dashboard, plotting historical trends, category mastery rings, and average score metrics over time.</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -442,7 +686,9 @@
             <i class="fas fa-sign-in-alt"></i> Sign In
           </button>
         </form>
-        
+
+
+
         <div style="text-align: center; margin-top: 30px; font-size: 0.9rem; color: var(--text-muted);">
           <span id="auth-toggle-msg">New to Verbalyze?</span> 
           <a href="#" id="auth-toggle-link" style="color: var(--accent-primary); font-weight: 600;">Create an account</a>
@@ -511,9 +757,29 @@
   </main>
 
   <!-- Footer -->
-  <footer style="margin-top: 60px; padding: 40px 0 20px 0; border-top: 1px solid var(--glass-border); text-align: center; font-size: 0.9rem; color: var(--text-muted);">
-    <p>Developed with ❤️ by <span style="color: var(--accent-secondary); font-weight: 600;">Priyansh Yadav</span></p>
-    <p style="margin-top: 8px;">Got questions or suggestions? Contact at <a href="mailto:y.priyansh2438@gmail.com" style="color: var(--accent-primary); font-weight: 500;">y.priyansh2438@gmail.com</a></p>
+  <footer style="margin-top: 80px; padding: 40px 20px; border-top: 1px solid var(--glass-border); display: flex; justify-content: center;">
+    <div class="developer-profile-card glass-panel" style="max-width: 620px; width: 100%; padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; text-align: left;">
+      <div style="display: flex; align-items: center; gap: 18px;">
+        <div class="dev-avatar" style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); display: flex; justify-content: center; align-items: center; font-weight: 700; color: white; font-family: var(--font-heading); font-size: 1.1rem; box-shadow: 0 0 15px rgba(6, 182, 212, 0.3); border: 2px solid rgba(255,255,255,0.1);">
+          PY
+        </div>
+        <div>
+          <h4 style="margin: 0; font-size: 1.1rem; font-family: var(--font-heading); color: var(--text-primary);">Priyansh Yadav</h4>
+          <p style="margin: 2px 0 0 0; font-size: 0.82rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em;">Lead Developer & System Architect</p>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="mailto:y.priyansh2438@gmail.com" class="dev-link" title="Contact Email" style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); display: flex; justify-content: center; align-items: center; color: var(--text-secondary); transition: var(--transition-smooth); font-size: 1.1rem; text-decoration: none;">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="https://github.com" target="_blank" class="dev-link" title="GitHub Profile" style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); display: flex; justify-content: center; align-items: center; color: var(--text-secondary); transition: var(--transition-smooth); font-size: 1.1rem; text-decoration: none;">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://linkedin.com" target="_blank" class="dev-link" title="LinkedIn Connection" style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); display: flex; justify-content: center; align-items: center; color: var(--text-secondary); transition: var(--transition-smooth); font-size: 1.1rem; text-decoration: none;">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+    </div>
   </footer>
 
   <!-- Toast alert element -->
@@ -524,10 +790,31 @@
     </div>
   </div>
 
+  <!-- Fullscreen Processing / Loading Overlay -->
+  <div id="processing-overlay" class="processing-overlay" style="display: none;">
+    <div class="processing-content">
+      <div class="processing-spinner">
+        <div class="spinner-ring"></div>
+        <div class="spinner-core">
+          <i class="fas fa-brain"></i>
+        </div>
+      </div>
+      <h3 id="processing-status-title">Generating Your Report Card</h3>
+      <p id="processing-status-desc">Analyzing voice patterns and content...</p>
+      <div class="processing-progress-bar">
+        <div class="processing-progress-fill" id="processing-progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Core Javascript Modules -->
   <script src="questions.js"></script>
   <script src="interview.js"></script>
   <script src="feedback.js"></script>
   <script src="app.js"></script>
+
+  <!-- Designer Custom Cursor Pointers -->
+  <div class="custom-cursor-dot" id="custom-cursor-dot"></div>
+  <div class="custom-cursor-ring" id="custom-cursor-ring"></div>
 </body>
 </html>

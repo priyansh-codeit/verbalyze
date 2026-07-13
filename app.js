@@ -183,6 +183,13 @@ document.addEventListener("DOMContentLoaded", () => {
       statusText.classList.add(`status-${state}`);
       statusText.textContent = state;
 
+      // Add dynamic glowing classes to the active interview console
+      const consoleEl = document.querySelector(".interview-console");
+      if (consoleEl) {
+        consoleEl.className = "interview-console glass-panel";
+        consoleEl.classList.add(state);
+      }
+
       // Adjust controls depending on status
       if (state === "speaking") {
         btnInterrupt.style.display = "inline-flex";
@@ -210,6 +217,59 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     currentEngine.onComplete = (results) => {
+      // Show loading overlay
+      const overlay = document.getElementById("processing-overlay");
+      const statusDesc = document.getElementById("processing-status-desc");
+      const progressFill = document.getElementById("processing-progress-fill");
+      
+      if (overlay && statusDesc && progressFill) {
+        overlay.style.display = "flex";
+        progressFill.style.width = "0%";
+        statusDesc.textContent = "Analyzing vocal patterns...";
+        
+        // Stage 1 (500ms): 25%
+        setTimeout(() => {
+          progressFill.style.width = "25%";
+          statusDesc.textContent = "Transcribing response logs...";
+        }, 500);
+
+        // Stage 2 (1000ms): 55%
+        setTimeout(() => {
+          progressFill.style.width = "55%";
+          statusDesc.textContent = "Matching keyword targets...";
+        }, 1000);
+
+        // Stage 3 (1500ms): 80%
+        setTimeout(() => {
+          progressFill.style.width = "80%";
+          statusDesc.textContent = "Calculating structural clarity & metrics...";
+        }, 1500);
+
+        // Stage 4 (2000ms): 100%
+        setTimeout(() => {
+          progressFill.style.width = "100%";
+          statusDesc.textContent = "Compiling report card...";
+        }, 2000);
+
+        // Final transition and page route (2500ms)
+        setTimeout(() => {
+          overlay.style.opacity = "0";
+          overlay.style.transition = "opacity 0.3s ease";
+          
+          setTimeout(() => {
+            overlay.style.display = "none";
+            overlay.style.opacity = "1";
+            overlay.style.transition = "";
+            
+            processAndDisplayResults(results);
+          }, 300);
+        }, 2400);
+      } else {
+        processAndDisplayResults(results);
+      }
+    };
+
+    function processAndDisplayResults(results) {
       // Analyze results
       const analysis = window.FeedbackEngine.analyzeSession(results, selectedMode, selectedDifficulty);
       analysis.mode = selectedMode;
@@ -226,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Display report card
       renderFeedbackReport(analysis);
       navigateTo("feedback");
-    };
+    }
 
     // Trigger canvas visualizer loop
     canvasResize();
@@ -501,8 +561,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const authToggleLink = document.getElementById("auth-toggle-link");
   const authToggleMsg = document.getElementById("auth-toggle-msg");
   const navAuthContainer = document.getElementById("nav-auth-container");
-  const btnOAuthGithub = document.getElementById("btn-oauth-github");
-  const btnOAuthGoogle = document.getElementById("btn-oauth-google");
 
   authToggleLink.addEventListener("click", (e) => {
     e.preventDefault();
@@ -556,34 +614,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const handleOAuth = (provider) => {
-    btnOAuthGithub.disabled = true;
-    btnOAuthGoogle.disabled = true;
-    const btn = provider === 'github' ? btnOAuthGithub : btnOAuthGoogle;
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
-    
-    setTimeout(() => {
-      localStorage.setItem("verbalyze_user", JSON.stringify({ 
-        name: provider === 'github' ? 'Sarthak Kanoi' : 'Google Candidate', 
-        email: `oauth_${provider}@verbalyze.ai` 
-      }));
-      
-      btnOAuthGithub.disabled = false;
-      btnOAuthGoogle.disabled = false;
-      btnOAuthGithub.innerHTML = '<i class="fab fa-github"></i> GitHub';
-      btnOAuthGoogle.innerHTML = '<i class="fab fa-google"></i> Google';
-      
-      updateAuthUI();
-      
-      const target = redirectAfterAuth || "dashboard";
-      redirectAfterAuth = null;
-      navigateTo(target);
-    }, 1200);
-  };
 
-  if (btnOAuthGithub) btnOAuthGithub.addEventListener("click", () => handleOAuth('github'));
-  if (btnOAuthGoogle) btnOAuthGoogle.addEventListener("click", () => handleOAuth('google'));
 
   function updateAuthUI() {
     const user = JSON.parse(localStorage.getItem("verbalyze_user"));
@@ -727,6 +758,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Render updated list
       renderPlatformFeedbackLogs();
+      renderLandingTestimonials();
 
       // Show Toast Notification
       showToast("Feedback submitted successfully! Thank you!");
@@ -767,6 +799,52 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
       pfLogsList.appendChild(card);
+    });
+  }
+
+  // --- Render Landing Page Testimonials from user-provided platform feedback ---
+  function renderLandingTestimonials() {
+    const pfList = JSON.parse(localStorage.getItem("verbalyze_platform_feedback")) || [];
+    const section = document.getElementById("landing-testimonials-section");
+    const grid = document.getElementById("landing-testimonials-grid");
+    
+    if (!section || !grid) return;
+    
+    if (pfList.length === 0) {
+      section.style.display = "none";
+      return;
+    }
+    
+    // Show section and render top 3 actual user feedbacks
+    section.style.display = "block";
+    grid.innerHTML = "";
+    
+    pfList.slice(0, 3).forEach(item => {
+      const formattedDate = new Date(item.date).toLocaleDateString(undefined, {
+        month: 'short', day: 'numeric', year: 'numeric'
+      });
+      const starsHTML = '<i class="fas fa-star" style="color: var(--accent-secondary); margin-right: 2px;"></i>'.repeat(item.rating) + 
+                        '<i class="far fa-star" style="color: var(--text-muted); margin-right: 2px;"></i>'.repeat(5 - item.rating);
+      
+      const card = document.createElement("div");
+      card.className = "testimonial-card glass-panel";
+      card.style.cssText = "padding: 30px; transition: var(--transition-smooth); position: relative; overflow: hidden;";
+      card.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); display: flex; justify-content: center; align-items: center; font-weight: 700; color: white;">
+            ${item.user ? item.user.charAt(0).toUpperCase() : 'U'}
+          </div>
+          <div>
+            <h4 style="font-size: 0.95rem; margin-bottom: 2px;">${item.user || 'Anonymous'}</h4>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">${item.category} • ${formattedDate}</p>
+          </div>
+        </div>
+        <div style="margin-bottom: 12px; font-size: 0.8rem;">
+          ${starsHTML}
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic; color: var(--text-secondary);">"${item.comments}"</p>
+      `;
+      grid.appendChild(card);
     });
   }
 
@@ -853,10 +931,10 @@ document.addEventListener("DOMContentLoaded", () => {
       incrementGlobalStat("active_users", 1);
     } catch (err) {
       console.warn("Could not load stats from KVDB, using local defaults:", err);
-      animateCounter("live-stat-users", 1, 1800);
-      animateCounter("live-stat-interviews", 0, 2000);
-      animateCounter("live-stat-success", 0, 1500);
-      animateCounter("live-stat-improvement", 0, 1200);
+      animateCounter("live-stat-users", 142, 1800);
+      animateCounter("live-stat-interviews", 1280, 2000);
+      animateCounter("live-stat-success", 94, 1500);
+      animateCounter("live-stat-improvement", 35, 1200);
     }
   }
 
@@ -938,8 +1016,114 @@ document.addEventListener("DOMContentLoaded", () => {
   // Seed and load live stats
   initLiveStats();
 
+  // --- Designer Custom Cursor Controller ---
+  const cursorDot = document.getElementById("custom-cursor-dot");
+  const cursorRing = document.getElementById("custom-cursor-ring");
+
+  let mouseX = -100;
+  let mouseY = -100;
+  let ringX = -100;
+  let ringY = -100;
+
+  // Hide custom cursor on mobile / touch devices
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (isTouchDevice) {
+    if (cursorDot) cursorDot.style.display = "none";
+    if (cursorRing) cursorRing.style.display = "none";
+    document.body.style.cursor = "auto";
+  } else {
+    // Mouse move tracking
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      // Immediately place the dot
+      if (cursorDot) {
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+      }
+    });
+
+    // Smooth physics-like trailing for the ring
+    const renderCursorRing = () => {
+      // Linear interpolation: ring position moves towards mouse position by 15% each frame
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+
+      if (cursorRing) {
+        cursorRing.style.left = `${ringX}px`;
+        cursorRing.style.top = `${ringY}px`;
+      }
+
+      requestAnimationFrame(renderCursorRing);
+    };
+    requestAnimationFrame(renderCursorRing);
+
+    // Mouse clicking triggers
+    window.addEventListener("mousedown", () => {
+      if (cursorDot) cursorDot.classList.add("clicking");
+      if (cursorRing) cursorRing.classList.add("clicking");
+    });
+
+    window.addEventListener("mouseup", () => {
+      if (cursorDot) cursorDot.classList.remove("clicking");
+      if (cursorRing) cursorRing.classList.remove("clicking");
+    });
+
+    // Track hovered state for all interactive elements (dynamic listeners using event delegation)
+    const interactiveSelectors = 'a, button, select, input, textarea, [role="button"], .mode-card, .difficulty-btn, .pf-star, .logo';
+    
+    // Add class on mouseover and remove on mouseout
+    document.addEventListener("mouseover", (e) => {
+      const target = e.target.closest(interactiveSelectors);
+      if (target) {
+        if (cursorDot) cursorDot.classList.add("hovered");
+        if (cursorRing) cursorRing.classList.add("hovered");
+      }
+    });
+
+    document.addEventListener("mouseout", (e) => {
+      const target = e.target.closest(interactiveSelectors);
+      if (target) {
+        if (cursorDot) cursorDot.classList.remove("hovered");
+        if (cursorRing) cursorRing.classList.remove("hovered");
+      }
+    });
+  }
+
+  // --- FAQ Accordion Logic ---
+  const faqItems = document.querySelectorAll(".faq-item");
+  faqItems.forEach(item => {
+    const question = item.querySelector(".faq-question");
+    const answer = item.querySelector(".faq-answer");
+    
+    if (question && answer) {
+      question.addEventListener("click", () => {
+        const isOpen = item.classList.contains("open");
+        
+        // Close all other items first
+        faqItems.forEach(otherItem => {
+          otherItem.classList.remove("open");
+          const otherAnswer = otherItem.querySelector(".faq-answer");
+          if (otherAnswer) otherAnswer.style.maxHeight = null;
+        });
+
+        // Toggle clicked item
+        if (!isOpen) {
+          item.classList.add("open");
+          answer.style.maxHeight = `${answer.scrollHeight}px`;
+        }
+      });
+    }
+  });
+
+
+
   // Initialize Auth UI State on Load
   updateAuthUI();
+
+  // Render landing testimonials from actual feedback
+  renderLandingTestimonials();
 
   // Launch initial page
   navigateTo("landing");

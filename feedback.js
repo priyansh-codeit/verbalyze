@@ -27,9 +27,12 @@ class FeedbackEngine {
         }
       });
       
-      const keywordScore = item.keywords.length > 0 
-        ? Math.round((matched.length / item.keywords.length) * 100) 
-        : 100;
+      let keywordScore = 0;
+      if (answer !== '[Skipped by candidate]') {
+        keywordScore = item.keywords.length > 0 
+          ? Math.round((matched.length / item.keywords.length) * 100) 
+          : 100;
+      }
         
       // 2. Length/Completeness analysis
       const wordCount = answer.split(/\s+/).filter(w => w.length > 0).length;

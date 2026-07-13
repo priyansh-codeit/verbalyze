@@ -7,7 +7,13 @@ class InterviewEngine {
     
     // Grab questions from db
     const categoryQuestions = window.QUESTIONS[mode] && window.QUESTIONS[mode][difficulty];
-    this.questions = categoryQuestions ? [...categoryQuestions] : [];
+    let pool = categoryQuestions ? [...categoryQuestions] : [];
+    
+    // Shuffle the pool of questions to prevent repetition
+    this.shuffle(pool);
+    
+    // Limit to 3 questions per session
+    this.questions = pool.slice(0, 3);
     
     // State
     this.currentQuestionIndex = 0;
@@ -35,6 +41,13 @@ class InterviewEngine {
     this.onComplete = null;
     
     this.initSpeechRecognition();
+  }
+
+  shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
   }
 
   initSpeechRecognition() {
@@ -192,11 +205,10 @@ class InterviewEngine {
   }
 
   submitAnswer(manualText = null) {
+    this.changeState('processing');
     if (this.recognition) {
       try { this.recognition.stop(); } catch (e) {}
     }
-    
-    this.changeState('processing');
     
     if (manualText !== null && manualText.trim() !== "") {
       this.transcripts[this.currentQuestionIndex] = manualText.trim();
@@ -215,6 +227,7 @@ class InterviewEngine {
   }
 
   endInterview() {
+    this.changeState('idle');
     this.synth.cancel();
     if (this.recognition) {
       try { this.recognition.stop(); } catch (e) {}
